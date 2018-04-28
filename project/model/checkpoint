@@ -1,0 +1,6 @@
+model_checkpoint_path: "/home/weic/project/stage2/./model/model9900349500.ckpt"
+all_model_checkpoint_paths: "/home/weic/project/stage2/./model/model9506347500.ckpt"
+all_model_checkpoint_paths: "/home/weic/project/stage2/./model/model9604098000.ckpt"
+all_model_checkpoint_paths: "/home/weic/project/stage2/./model/model9702348500.ckpt"
+all_model_checkpoint_paths: "/home/weic/project/stage2/./model/model9801099000.ckpt"
+all_model_checkpoint_paths: "/home/weic/project/stage2/./model/model9900349500.ckpt"
