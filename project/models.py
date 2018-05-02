@@ -94,10 +94,13 @@ def down_sampling(x,ksize=2,strides=2,padding='VALID'):
 
 def full_connect(inp,out_filters):
     #input, filter, strides, padding, use_cudnn_on_gpu=True, data_format="NHWC", name=None
+    kernel_w=inp.get_shape().as_list()[1]
+    kernel_h=inp.get_shape().as_list()[2]
+
     _weights = tf.Variable(tf.contrib.layers.xavier_initializer(uniform=False)
-                           ([1, 1, inp.get_shape().as_list()[-1], out_filters])
+                           ([kernel_w, kernel_h, inp.get_shape().as_list()[-1], out_filters])
                            , name='weight1')
-    conv=tf.nn.conv2d(inp,_weights,[1,1,1,1],padding='SAME')
+    conv=tf.nn.conv2d(inp,_weights,[1,1,1,1],padding='VALID')
     biases = tf.Variable(tf.constant(0.0, shape=[out_filters], dtype=tf.float32), name='biases')
     re_conv2 = tf.add(conv, biases)
     #sum_conv=tf.reduce_sum(conv,[0,1,2])
@@ -129,7 +132,7 @@ def local_share_weight_conv2(input_images,filter_size,stride,out_filters,div_w=2
     norm_part_width=shape_input[1]//div_w
     norm_part_height=shape_input[2]//div_h
     region_list=[]
-    
+
     begin_w = 0
     begin_h = 0
 

@@ -38,7 +38,7 @@ def main():
     with tf.name_scope('input'):
         inp = tf.placeholder(tf.float32, [None, ImageSize, ImageSize, 3], name='pl_input')
         label = tf.placeholder(tf.float32, [None, Points, 2], name='pl_label')
-    models.local_share_weight_conv2(inp,2,[1,1,1,1],20,1,1)
+
 
     with tf.name_scope('model'):
         out_model = stage2Model.stage2_part(inp, 5)
