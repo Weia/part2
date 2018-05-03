@@ -20,7 +20,20 @@ if __name__ == '__main__':
     #     sess.run(init)
     #     print(sess.run(ls_loss))
 
-    a=np.asarray([[1,23,3],
-                  [1, 23, 3]])
+    # a=np.asarray([[1,23,3],
+    #               [1, 23, 3]])
+    # print(a)
+    # print(a[0:4])
+    # for i in range(2):
+    #     print(i)
+    a=np.random.randint(2,10,[78,78])
     print(a)
-    print(a[0:4])
+    c=tf.Variable(a,False)
+    pc=tf.pad(c,[[8,8],[8,8]])
+    b=[]
+    d=tf.reshape(b,[-1,15,15,3])
+
+    init = tf.global_variables_initializer()
+    with tf.Session() as sess:
+        sess.run(init)
+        print(sess.run(d))

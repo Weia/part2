@@ -12,16 +12,17 @@ import load_batch_data
 
 import stage2Model
 import stage3model
+import create_train_model
 
 Points=5
-ImageSize=39
+ImageSize=78
 
 model_dir='./model'#save model
 train_log_dir='./log/train'#every batch info,loss and lr
 epoch_log_dir='./log/epoch'#every epoch info,feature map
 
 nEpoch=100000
-batch_size=256
+batch_size=2
 dataNum=13000 #num of samples
 numBatch=5#dataNum//batch_size
 save_stage=500 #step to save
@@ -36,12 +37,12 @@ def main():
     global_step=tf.Variable(0,trainable=False)
     print('*' * 10, 'create model', '*' * 10)
     with tf.name_scope('input'):
-        inp = tf.placeholder(tf.float32, [None, ImageSize, ImageSize, 3], name='pl_input')
-        label = tf.placeholder(tf.float32, [None, Points, 2], name='pl_label')
+        inp = tf.placeholder(tf.float32, [batch_size, ImageSize, ImageSize, 3], name='pl_input')
+        label = tf.placeholder(tf.float32, [batch_size, Points, 2], name='pl_label')
 
 
     with tf.name_scope('model'):
-        out_model = stage2Model.stage2_part(inp, 5)
+        out_model = create_train_model.create_model(inp,Points)
     with tf.name_scope('loss'):
         diff = tf.subtract(out_model, label, name='sbu_label')
         l2_loss = tf.nn.l2_loss(diff, name='l2_loss')
