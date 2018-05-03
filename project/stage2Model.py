@@ -16,28 +16,25 @@ nPoints=5
 def stage2_part(inp,num_point):
     """
     stage2 predict,use small part as input to implement more precise location
-    :param inp: a tensor with 4-D 39*39
+    :param inp: a tensor with 4-D 78*78
     :param num_point: a int number, the count of point to locate
     :return:a tensor 1-D,[num_point*2]
     """
-    conv_1 = models.conv2(inp, 4, [1, 1, 1, 1], 20, padding='VALID')
 
-    tf.summary.image('conv1',tf.transpose(conv_1[0:1,:,:,:],[3,1,2,0]),max_outputs=20,collections=['epoch_step'])
+    conv_1=models.local_share_weight_conv2(inp,7,[1,2,2,1],20,2,2)
+    tf.summary.image('conv1',tf.transpose(conv_1[0:1,:,:,:],[3,1,2,0]),max_outputs=5,collections=['epoch_step'])
     pool_1 = models.down_sampling(conv_1)
 
-    conv_2 = models.conv2(pool_1, 3, [1, 1, 1, 1], 40, padding='VALID')
-
-    tf.summary.image('conv2',tf.transpose(conv_2[0:1,:,:,:],[3,1,2,0]),max_outputs=40,collections=['epoch_step'])
+    conv_2=models.local_share_weight_conv2(pool_1,3,[1,1,1,1],40,2,2)
+    tf.summary.image('conv2',tf.transpose(conv_2[0:1,:,:,:],[3,1,2,0]),max_outputs=5,collections=['epoch_step'])
     pool_2 = models.down_sampling(conv_2)
 
-    conv_3 = models.conv2(pool_2, 3, [1, 1, 1, 1],  60, padding='VALID')
-
-    tf.summary.image('conv3',tf.transpose(conv_3[0:1,:,:,:],[3,1,2,0]),max_outputs=60,collections=['epoch_step'])
+    conv_3=models.local_share_weight_conv2(pool_2,3,[1,1,1,1],60,3,3)
+    tf.summary.image('conv3',tf.transpose(conv_3[0:1,:,:,:],[3,1,2,0]),max_outputs=5,collections=['epoch_step'])
     pool_3 = models.down_sampling(conv_3)
 
-    conv_4 = models.conv2(pool_3, 2, [1, 1, 1, 1],  80, padding='VALID')
-
-    tf.summary.image('conv4',tf.transpose(conv_4[0:1,:,:,:],[3,1,2,0]),max_outputs=80,collections=['epoch_step'])
+    conv_4=models.local_share_weight_conv2(pool_3,2,[1,1,1,1],80,2,2)
+    tf.summary.image('conv4',tf.transpose(conv_4[0:1,:,:,:],[3,1,2,0]),max_outputs=5,collections=['epoch_step'])
 
 
     fc_1=models.full_connect(conv_4,120)

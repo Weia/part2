@@ -38,7 +38,7 @@ def batch_norm_relu(x):
 
 
 def conv2(input_images,filter_size,stride,out_filters,div_p=2,padding='SAME',weight=None,activate=tf.nn.relu):
-    #将权重分模块做卷积
+    #将权重分模块做卷积，2 2分
     in_filters=input_images.get_shape().as_list()[-1]
     #卷积核初始化
 
